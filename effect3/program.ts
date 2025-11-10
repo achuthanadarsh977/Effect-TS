@@ -1,0 +1,10 @@
+
+import {Effect} from "effect"
+
+const log = (message:string) => 
+    Effect.sync(() => {
+        console.log(message)
+    })
+
+const program = log('Hello everyone') 
+Effect.runSync(program)
