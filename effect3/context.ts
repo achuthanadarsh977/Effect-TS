@@ -1,0 +1,16 @@
+import {Effect , Context} from "effect"
+
+
+class SomeContext extends Context.Tag("SomeContext")<SomeContext,{}>(){}
+
+
+
+declare const program : Effect.Effect<number,Error,SomeContext> 
+
+
+
+type a = Effect.Effect.Success<typeof program>
+type b = Effect.Effect.Error<typeof program>
+
+type c = Effect.Effect.Context<typeof program>
+
