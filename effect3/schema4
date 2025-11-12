@@ -1,0 +1,146 @@
+
+import {Effect,Schema} from 'effect'
+
+
+
+const individual = Schema.Struct({
+    name:Schema.NonEmptyString,
+    age:Schema.Number,
+    address:Schema.String,
+    email:Schema.String,
+    aadhar_no:Schema.Number
+})
+
+
+const indyencoded = {
+    name:"John Andrews",
+    age:32,
+    email:'john@example.com',
+    phone:7660366422,
+    address:'amjikarai',
+    gender:'Male',
+    aadhar_no:3444456778
+}
+
+
+
+type person = Schema.Schema.Type<typeof individual>
+console.log(Schema.encodeSync(individual)(indyencoded))
+console.log(Schema.decodeSync(individual)(indyencoded)) const person = Schema.Struct({
+    name:Schema.String,
+    age:Schema.Number,
+    email:Schema.String,
+    phone:Schema.Number,
+    address:Schema.String,
+    gender:Schema.String,
+    aadhar_no:Schema.Number  
+})
+
+
+type person = Schema.Schema.Type<typeof person>
+
+
+type PersonEncoded = Schema.Schema.Encoded<typeof person>
+
+const rawperson: PersonEncoded = {
+
+    name:"John Andrews",
+    age:32,
+    email:'john@example.com',
+    phone:7660366422,
+    address:'amjikarai',
+    gender:'Male',
+    aadhar_no:3444456778
+}
+
+const parsed = Schema.decodeSync(person)(rawperson)
+console.log(parsed)
+
+const tenmon = Schema.Struct({
+    name:Schema.String,
+    age:Schema.Number,
+    address:Schema.String,
+    aadhar_no:Schema.Number,
+    gender:Schema.String,
+    phone:Schema.Number
+})
+
+type termon = Schema.Schema.Type<typeof tenmon>
+
+type termon1 = Schema.Schema.Encoded<typeof tenmon>
+
+
+const terrow : termon = {
+    name:"John Matthew",
+    age:32,
+    address:"Sivananda Salai",
+    aadhar_no:76608894,
+    gender:'Male',
+    phone:766048897
+}
+
+const parsed = Schema.decodeSync(tenmon)(terrow)
+console.log(parsed)
+
+
+
+const u  = Schema.Null
+const f = Schema.Literal('any')
+const e = Schema.Literal(2)
+const d = Schema.Literal(true)
+const a = Schema.Literal(false)
+const b = Schema.Literal(-89)
+
+console.log(Schema.decodeUnknownSync(e)(2))
+
+
+
+const FruitCategory = Schema.Literal('SWEET','CITRUS','TROPICAL')
+
+const fruits = Schema.Struct({
+    id:Schema.Number,
+    category: FruitCategory.pipe(Schema.pickLiteral("SWEET","CITRUS","TROPICAL"))
+})
+
+type fruits = Schema.Schema.Type<typeof fruits>
+
+type FruitsEncoded = Schema.Schema.Encoded<typeof fruits>
+
+const consfruits : FruitsEncoded = {
+
+    id:1001,
+    category:'SWEET'
+}
+
+const peach = Schema.decodeSync(fruits)(consfruits)
+
+console.log(peach)
+
+const Person = Schema.Struct({
+    name:Schema.String,
+    age:Schema.Number,
+    address:Schema.String,
+    aadhar_no:Schema.Number,
+    gender:Schema.String
+})
+
+const input : unknown = {name:'John',age:34,address:'Slay',aadhar_no:34556678889,gender:'Male'}
+
+console.log(Schema.decodeUnknownSync(Person)(input))
+
+const output: unknown = {name:'Sarah',age:25,address:'RMS',aadhar_no:56677777,gender:'Female'}
+
+console.log(Schema.decodeUnknownSync(Person)(output))
+
+const succeed = Either.right(32)
+const failure = Either.left(42)
+
+console.log('Succeed:'+succeed)
+console.log('Failure:'+failure)
+
+
+const PersonWithDate = Schema.Struct({
+    name:Schema.String,
+    birthday:Schema.DateFromString
+})
+
