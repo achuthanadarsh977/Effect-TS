@@ -44,7 +44,3 @@ import { integer } from "effect/FastCheck"
 
 // console.log(result)
 
-
-const mixed = Effect.gen(function* (){
-    
-})
